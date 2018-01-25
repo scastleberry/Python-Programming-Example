@@ -1,21 +1,19 @@
 # Python-Programming-Example
 # This repository contains an example Python script, small Python function library, and BASH wrapper script I created to facilitate the installation of a new radar software build on a Linux account.
 
-##############################
+Please note that the main text below is from the README file that I created for the users at the ROC to use to know how to use this software; that is, it was developed and written originally for a specific audience. Due to the auxiliary files and paths needed, please don't try to actually run this code here (as it will not work), as it is being used here simply as a demonstation of some of the Python programming I have done in the past. 
 
-# Please note that the main text below is from the README file that I created for the users at the ROC to use to know how to use this software; that is, it was developed and written originally for a specific audience. Due to the auxiliary files and paths needed, please don't try to actually run this code here (as it will not work), as it is being used here simply as a demonstation of some of the Python programming I have done in the past. 
+The overall flow of this software (in a nutshell) is as follows:
+ 
+There are three core files involved: full_install_rpg (a wrapper BASH script - needed to source Linux environmental variables after the Python script completes), rpg_full_installation.py (the main Python script that does most of the work), and finally rpg_install_functions.py (is a small library of subroutines that are used one or more times throughout the main script).
 
-# The overall flow of this software (in a nutshell) is as follows:
-# 
-# There are three core files involved: full_install_rpg (a wrapper BASH script - needed to source Linux environmental variables after the Python script completes), rpg_full_installation.py (the main Python script that does most of the work), and finally rpg_install_functions.py (is a small library of subroutines that are used one or more times throughout the main script).
-#
-# To begin, the user logs into the Linux account under which they want to install a new radar software build (called an RPG build), and uses the Linux command line throughout the process.
-#
-# The user, if needed, reads the text of this README file below to understand the files needed for this software to operate correctly, and its caveats. Additionally, running the main Python script (either alone or via the wrapper) with no input arguements from the command line will display help text describing to the user how to run the software correctly.
-#
-# Then, the script started from the command line via running the wrapper script full_install_rpg and supplying it with the specified options as the user dictates.
-#
-# The text below is the full README file that was supplied with this software. Please note that this file was designed to be used in a Linux text editor, or viewed in MS Word in Web Layout view.
+* To begin, the user logs into the Linux account under which they want to install a new radar software build (called an RPG build), and uses the Linux command line throughout the process.
+
+* The user, if needed, reads the text of this README file below to understand the files needed for this software to operate correctly, and its caveats. Additionally, running the main Python script (either alone or via the wrapper) with no input arguements from the command line will display help text describing to the user how to run the software correctly.
+
+* Then, the script started from the command line via running the wrapper script full_install_rpg and supplying it with the specified options as the user dictates.
+
+The text below is the full README file that was supplied with this software. Please note that this file was designed to be used in a Linux text editor, or viewed in MS Word in Web Layout view.
 
 Documentation for running the automated RPG build installation software on a Linux ORPG# account:
 
