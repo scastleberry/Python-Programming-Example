@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# This script is a "wrapper" shell process to run the RPG full installation Python script, 
+# return to the $HOME directory, and source the environmental data.
+
+# Acquire the RHEL version of the Linux machine currently being used.
+rhel_vf=$(cat /etc/redhat-release | cut -d ' ' -f 7)
+rhel_v=${rhel_vf%.*}
+
+# Acquire the directory of the script.
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Execute the main Python script.
+$script_dir/rpg_full_installation.py $*
+
+# Retrieve the script's output and make decisions accordingly.
+ret_val=$?
+success_code=0
+start_code=2
+gedit_settings_maxRhelV=5
+
+if [ $ret_val == $success_code ] || [ $ret_val == $start_code ]; then
+	set qc_inputs=$`cat $script_dir/qc_inputs.txt`
+	rad_site=$4
+				
+	cd ~
+	. .bash_profile
+	
+	if [ $ret_val == $start_code ]; then
+		if [ $rad_site != '0' ]; then
+			echo -e "Changing radar site to $rad_site and arming the MRPG ...\n"
+			change_radar -r $rad_site -R >/dev/null 2>&1
+			mrpg -p startup >/dev/null 2>&1
+			echo -e "Radar site changed to $rad_site, RPG software activated.\n"
+		else
+			echo -e "Arming the MRPG ...\n"
+			mrpg -p startup >/dev/null 2>&1
+			echo -e "RPG software activated.\n"
+		fi	
+	elif [ $ret_val == $success_code ]; then
+		if [ $rad_site != '0' ]; then
+			echo -e "Changing radar site to $rad_site ...\n"
+			change_radar -r $rad_site -R >/dev/null 2>&1
+			echo -e "Radar site changed to $rad_site, RPG software not activated.\n"
+		else
+			echo -e "RPG software not activated.\n"
+		fi
+	fi
+	
+	# If possible, restore the current ORPG account's previously used gedit settings.
+	if [ "$rhel_v" -le "$gedit_settings_maxRhelV" ]; then
+		gconftool-2 --load $script_dir/gedit_settings.txt
+	fi
+		
+	echo -e "Program execution complete.\n"	
+fi
+
